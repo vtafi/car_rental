@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<div class="page-header">
+  <h1>🏠 Dashboard</h1>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">🚗</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.totalCars %></div>
+      <div class="stat-label">Tổng xe</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">✅</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.availableCars %></div>
+      <div class="stat-label">Xe sẵn sàng</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🔑</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.rentedCars %></div>
+      <div class="stat-label">Đang cho thuê</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📋</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.totalBookings %></div>
+      <div class="stat-label">Tổng đặt xe</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⏳</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.pendingBookings %></div>
+      <div class="stat-label">Chờ xác nhận</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">💰</div>
+    <div class="stat-info">
+      <div class="stat-number"><%= stats.totalRevenue.toLocaleString('vi-VN') %>₫</div>
+      <div class="stat-label">Doanh thu</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">📋 Đặt xe gần nhất</span>
+    <a href="/bookings" class="btn btn-ghost btn-sm">Xem tất cả →</a>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Khách hàng</th>
+          <th>Xe</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (recentBookings.length === 0) { %>
+          <tr><td colspan="6" class="table-empty">Chưa có đặt xe nào</td></tr>
+        <% } %>
+        <% recentBookings.forEach(b => { %>
+          <tr>
+            <td><strong><%= b.customerName %></strong></td>
+            <td><%= b.carNumber %></td>
+            <td><%= new Date(b.startDate).toLocaleDateString('vi-VN') %></td>
+            <td><%= new Date(b.endDate).toLocaleDateString('vi-VN') %></td>
+            <td><%= b.totalAmount.toLocaleString('vi-VN') %>₫</td>
+            <td><span class="badge badge-<%= b.status %>"><%= b.status %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

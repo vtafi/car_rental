@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+
+<% if (typeof message !== 'undefined' && message) { %>
+  <div class="alert alert-<%= messageType || 'info' %>"><%= message %></div>
+<% } %>
+
+<div class="page-header">
+  <h1>📋 Đặt xe</h1>
+  <a href="/bookings/new" class="btn btn-primary">+ Tạo đặt xe</a>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Danh sách đặt xe (<%= bookings.length %>)</span>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Khách hàng</th>
+          <th>Xe</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Tổng tiền</th>
+          <th>Nhận xe lúc</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (bookings.length === 0) { %>
+          <tr><td colspan="8" class="table-empty">📋 Chưa có đặt xe nào. <a href="/bookings/new">Tạo ngay!</a></td></tr>
+        <% } %>
+        <% bookings.forEach(b => { %>
+          <tr>
+            <td><strong><%= b.customerName %></strong></td>
+            <td><%= b.carNumber %></td>
+            <td><%= new Date(b.startDate).toLocaleDateString('vi-VN') %></td>
+            <td><%= new Date(b.endDate).toLocaleDateString('vi-VN') %></td>
+            <td><strong><%= b.totalAmount.toLocaleString('vi-VN') %>₫</strong></td>
+            <td>
+              <% if (b.pickup_at) { %>
+                <%= new Date(b.pickup_at).toLocaleString('vi-VN') %>
+              <% } else { %>
+                <span style="color:var(--text-muted)">–</span>
+              <% } %>
+            </td>
+            <td><span class="badge badge-<%= b.status %>"><%= b.status %></span></td>
+            <td>
+              <div style="display:flex;gap:5px;flex-wrap:wrap">
+                <% if (b.status === 'pending') { %>
+                  <form action="/bookings/<%= b._id %>/pickup" method="POST" style="display:inline">
+                    <button type="submit" class="btn btn-success btn-sm"
+                      data-confirm="Xác nhận nhận xe <%= b.carNumber %>?">🔑 Nhận xe</button>
+                  </form>
+                  <a href="/bookings/<%= b._id %>/edit" class="btn btn-warning btn-sm">✏️ Sửa</a>
+                <% } %>
+                <form action="/bookings/<%= b._id %>/delete" method="POST" style="display:inline">
+                  <button type="submit" class="btn btn-danger btn-sm"
+                    data-confirm="Xoá đặt xe này?">🗑️ Xoá</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

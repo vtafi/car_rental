@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập – Car Rental</title>
+  <meta name="description" content="Đăng nhập hệ thống quản lý cho thuê xe">
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg-primary); }
+    .auth-box {
+      width:100%; max-width:420px; padding:1rem;
+    }
+    .auth-card {
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:2.5rem;
+      box-shadow:0 8px 40px rgba(0,0,0,0.5);
+    }
+    .auth-logo {
+      text-align:center;
+      margin-bottom:2rem;
+    }
+    .auth-logo .icon { font-size:3rem; display:block; }
+    .auth-logo h1 {
+      font-size:1.6rem;
+      font-weight:800;
+      margin-top:0.5rem;
+      background:linear-gradient(135deg,#f0f4ff 0%,var(--accent) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .auth-logo p { color:var(--text-muted); font-size:0.88rem; margin-top:4px; }
+    .auth-footer {
+      text-align:center;
+      margin-top:1.5rem;
+      font-size:0.85rem;
+      color:var(--text-muted);
+    }
+    .auth-footer a { color:var(--accent); }
+    .btn-full { width:100%; justify-content:center; padding:11px; font-size:0.95rem; }
+  </style>
+</head>
+<body>
+<div class="auth-box">
+  <div class="auth-card fade-in">
+    <div class="auth-logo">
+      <span class="icon">🚗</span>
+      <h1>CarRental</h1>
+      <p>Đăng nhập để quản lý hệ thống</p>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">❌ <%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert alert-success">✅ <%= success %></div>
+    <% } %>
+
+    <form action="/auth/login" method="POST">
+      <% if (typeof redirect !== 'undefined' && redirect) { %>
+        <input type="hidden" name="redirect" value="<%= redirect %>" />
+      <% } %>
+
+      <div class="form-group">
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username" name="username"
+          placeholder="Nhập tên đăng nhập" autocomplete="username"
+          value="<%= typeof prefill !== 'undefined' ? prefill : '' %>" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password"
+          placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">🔑 Đăng nhập</button>
+    </form>
+
+    <div class="auth-footer">
+      Chưa có tài khoản? <a href="/register">Đăng ký</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
