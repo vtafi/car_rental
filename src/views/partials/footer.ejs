@@ -1,0 +1,25 @@
+</main>
+
+<footer>
+  <p>© <%= new Date().getFullYear() %> CarRental – Hệ thống quản lý cho thuê xe</p>
+</footer>
+
+<script>
+  // Auto-dismiss alerts
+  document.querySelectorAll('.alert').forEach(el => {
+    setTimeout(() => {
+      el.style.transition = 'opacity 0.5s';
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 500);
+    }, 4000);
+  });
+
+  // Confirm delete
+  document.querySelectorAll('[data-confirm]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (!confirm(btn.dataset.confirm || 'Bạn có chắc muốn xoá?')) e.preventDefault();
+    });
+  });
+</script>
+</body>
+</html>

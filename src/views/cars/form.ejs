@@ -1,0 +1,64 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <h1><%= car ? '✏️ Sửa xe' : '➕ Thêm xe mới' %></h1>
+  <a href="/cars" class="btn btn-ghost">← Quay lại</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error">❌ <%= error %></div>
+<% } %>
+
+<div class="card" style="max-width:640px">
+  <div class="card-body">
+    <form action="<%= car ? `/cars/${car._id}/update` : '/cars' %>" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="carNumber">Biển số xe *</label>
+          <input type="text" id="carNumber" name="carNumber"
+            value="<%= car ? car.carNumber : '' %>"
+            placeholder="VD: 51G-123.45" required />
+        </div>
+        <div class="form-group">
+          <label for="capacity">Sức chứa (chỗ) *</label>
+          <input type="number" id="capacity" name="capacity" min="1" max="100"
+            value="<%= car ? car.capacity : '' %>"
+            placeholder="VD: 5" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pricePerDay">Giá thuê / ngày (₫) *</label>
+          <input type="number" id="pricePerDay" name="pricePerDay" min="0"
+            value="<%= car ? car.pricePerDay : '' %>"
+            placeholder="VD: 500000" required />
+        </div>
+        <div class="form-group">
+          <label for="status">Trạng thái</label>
+          <select id="status" name="status">
+            <option value="available" <%= (!car || car.status === 'available') ? 'selected' : '' %>>✅ Sẵn sàng</option>
+            <option value="rented"    <%= (car && car.status === 'rented')      ? 'selected' : '' %>>🔑 Đang cho thuê</option>
+            <option value="maintenance" <%= (car && car.status === 'maintenance') ? 'selected' : '' %>>🔧 Bảo trì</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="features">Tính năng (cách nhau bằng dấu phẩy)</label>
+        <input type="text" id="features" name="features"
+          value="<%= car ? car.features.join(', ') : '' %>"
+          placeholder="VD: GPS, Máy lạnh, Camera lùi" />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          💾 <%= car ? 'Cập nhật' : 'Thêm xe' %>
+        </button>
+        <a href="/cars" class="btn btn-ghost">Huỷ</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> – Car Rental</title>
+    <meta
+      name="description"
+      content="Hệ thống quản lý cho thuê xe ô tô – <%= title %>"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-brand">
+        <span class="logo-icon">🚗</span>
+        <span>Car<span class="accent">Rental</span></span>
+      </a>
+      <ul class="navbar-nav">
+        <li>
+          <a href="/" class="<%= path === '/' ? 'active' : '' %>">
+            🏠 <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/cars"
+            class="<%= path.startsWith('/cars') ? 'active' : '' %>"
+          >
+            🚘 <span class="nav-label">Xe</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/bookings"
+            class="<%= path.startsWith('/bookings') ? 'active' : '' %>"
+          >
+            📋 <span class="nav-label">Đặt xe</span>
+          </a>
+        </li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
+        <% if (typeof user !== 'undefined' && user) { %>
+          <span style="font-size:0.82rem;color:var(--text-muted)">
+            <% if (user.role === 'admin') { %>🛡️<% } else { %>👤<% } %>
+            <strong style="color:var(--text-primary)"><%= user.username %></strong>
+            <span style="color:var(--text-muted);font-size:0.75rem">(<%= user.role %>)</span>
+          </span>
+          <form action="/auth/logout" method="POST" style="margin:0">
+            <button type="submit" class="btn btn-ghost btn-sm">🚪 Đăng xuất</button>
+          </form>
+        <% } %>
+      </div>
+    </nav>
+
+    <main class="main-wrapper fade-in">
