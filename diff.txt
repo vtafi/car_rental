@@ -1,0 +1,34 @@
+diff --git a/src/app.ts b/src/app.ts
+index e15dabb..ea53d2d 100644
+--- a/src/app.ts
++++ b/src/app.ts
+@@ -16,13 +16,8 @@ dotenv.config();
+ const app = express();
+ const PORT = process.env.PORT || 3001;
+ const MONGO_URI =
+-<<<<<<< HEAD
+   process.env.MONGO_URI ||
+   "mongodb+srv://car:car123@nodejs.fwsxclm.mongodb.net/car_rental";
+-=======
+-  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/car_rental";
+-
+->>>>>>> 689bf4cd295bf396834d4f99decf7bd06c39309c
+ // ── View engine ───────────────────────────────────────────────
+ app.set("view engine", "ejs");
+ app.set("views", path.join(__dirname, "views"));
+@@ -32,14 +27,10 @@ app.use(express.static(path.join(__dirname, "../public")));
+ 
+ // ── CORS ──────────────────────────────────────────────────────
+ // Allow specified origins (configurable per environment)
+-<<<<<<< HEAD
+ const allowedOrigins = (
+   process.env.CORS_ORIGIN ||
+-  "https://car-production-9d28.up.railway.app,http://localhost:3001"
++  "https://carrental-production-708f.up.railway.app,http://localhost:3001"
+ )
+-=======
+-const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3001")
+->>>>>>> 689bf4cd295bf396834d4f99decf7bd06c39309c
+   .split(",")
+   .map((o) => o.trim());
+ 
